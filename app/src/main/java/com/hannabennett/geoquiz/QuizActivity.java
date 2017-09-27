@@ -45,6 +45,7 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 checkAnswer(true);
+                disableButtons();
             }
         });
         mFalseButton = (Button) findViewById(R.id.false_button);
@@ -52,6 +53,7 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 checkAnswer(false);
+                disableButtons();
             }
         });
 
@@ -61,15 +63,27 @@ public class QuizActivity extends AppCompatActivity {
             public void onClick(View v) {
                 mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
                 updateQuestion();
+                enableButtons();
             }
         });
 
         updateQuestion();
+        enableButtons();
     }
 
     private void updateQuestion() {
         int question = mQuestionBank[mCurrentIndex].getTextResId();
         mQuestionTextView.setText(question);
+    }
+
+    private void disableButtons() {
+        mTrueButton.setEnabled(false);
+        mFalseButton.setEnabled(false);
+    }
+
+    private void enableButtons() {
+        mTrueButton.setEnabled(true);
+        mFalseButton.setEnabled(true);
     }
 
     private void checkAnswer(boolean userPressedTrue) {
