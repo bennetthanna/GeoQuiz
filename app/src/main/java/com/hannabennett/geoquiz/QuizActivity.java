@@ -96,6 +96,7 @@ public class QuizActivity extends AppCompatActivity {
                 return;
             }
             mIsCheater = CheatActivity.wasAnswerShown(data);
+            setQuestionCheated();
         }
     }
 
@@ -104,12 +105,19 @@ public class QuizActivity extends AppCompatActivity {
         mQuestionTextView.setText(question);
     }
 
+    private void setQuestionCheated() {
+        Question question = mQuestionBank[mCurrentIndex];
+        question.setHasCheated(mIsCheater);
+    }
+
     private void checkAnswer(boolean userPressedTrue) {
         boolean answerIsTrue = mQuestionBank[mCurrentIndex].isAnswerTrue();
 
         int messageResId = 0;
 
-        if (mIsCheater) {
+        Question question = mQuestionBank[mCurrentIndex];
+
+        if (question.getHasCheated()) {
             messageResId = R.string.judgment_toast;
         } else {
 
