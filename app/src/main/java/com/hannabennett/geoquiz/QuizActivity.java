@@ -3,6 +3,7 @@ package com.hannabennett.geoquiz;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -27,6 +28,7 @@ public class QuizActivity extends AppCompatActivity {
     };
 
     private int mCurrentIndex = 0;
+    private int mQuizScore = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,11 +95,23 @@ public class QuizActivity extends AppCompatActivity {
 
         if(userPressedTrue == answerIsTrue) {
             messageResId = R.string.correct_toast;
+            mQuizScore++;
+            Log.d(TAG, "Score: " + mQuizScore);
         } else {
             messageResId = R.string.incorrect_toast;
         }
 
         Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show();
+
+        if(mCurrentIndex == mQuestionBank.length - 1) {
+            showQuizScore();
+            mQuizScore = 0;
+        }
+    }
+
+    public void showQuizScore() {
+        Float percentage = (float)mQuizScore/mQuestionBank.length * 100;
+        Toast.makeText(this, "Score: " + percentage + "%", Toast.LENGTH_SHORT).show();
     }
 
     @Override
